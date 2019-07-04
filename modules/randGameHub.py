@@ -28,6 +28,7 @@ class RandCircle():
 '''--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'''
 
 def difficultyChoice(screenCol, textCol):
+    pg.display.set_caption('Circle Game')
     Bool = True
     FPS = 25
     screenWidth, screenHeight = (1120, 630)
@@ -111,6 +112,7 @@ def mainLoop(screenCol, textCol, speed, size):
     screenWidth, screenHeight = (1120, 630)
     screen = pg.display.set_mode((screenWidth, screenHeight))
     clock = pg.time.Clock()
+    screenCenter = (screenWidth//2, screenHeight//2)
     
     circle = RandCircle(size)
     
@@ -123,7 +125,7 @@ def mainLoop(screenCol, textCol, speed, size):
                     Quit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if screen.get_at(pg.mouse.get_pos()) == clr.red:
-                    text(screen, 310, 285, 79, "Congrats! Clicked!", textCol)
+                    text(screen, 0, 0, 79, "Congrats! Clicked!", textCol, screenCenter)
                     pg.display.update()
                     pg.time.wait(2500)
                     return screenCol, textCol

@@ -1,12 +1,11 @@
 import pygame as pg
-pg.init
 import math
 import clr
 
 
 class Button():
     def __init__(self, x, y, wd, ht, text = '', img = None, hovourImg = None, textHeight = None, textColour = clr.black,
-                 colour = pg.Color(32, 32, 32, 1), hovourColour = pg.Color(75, 75, 75, 1), opaque = True, activated = True):
+                 colour = clr.gray, hovourColour = clr.light_gray, opaque = True, activated = True, outline = False):
         if not textHeight:
             textHeight = ht//5
         self.textHeight = textHeight
@@ -21,10 +20,14 @@ class Button():
         self.opaque = opaque
         self.activated = activated
         self.flag = False
-    def onButton(self):
-        return self.rect.collidepoint(pg.mouse.get_pos())
-    def show(self, surface):
-        if self.onButton():
+        self.outline = outline
+    def onButton(self, origin = (0,0)):
+        mpos = list(pg.mouse.get_pos())
+        mpos[0] -= origin[0]
+        mpos[1] -= origin[1]
+        return self.rect.collidepoint(mpos)
+    def show(self, surface, origin = (0,0)):
+        if self.onButton(origin):
             if self.img:
                 image = self.hovourImg
             else:
@@ -39,12 +42,17 @@ class Button():
         else:
             if self.opaque:
                 pg.draw.rect(surface, colour, self.rect)
+        if self.outline:
+            pg.draw.line(surface, clr.black, self.rect.topleft, self.rect.topright)
+            pg.draw.line(surface, clr.black, self.rect.bottomright, self.rect.topright)
+            pg.draw.line(surface, clr.black, self.rect.bottomleft, self.rect.bottomright)
+            pg.draw.line(surface, clr.black, self.rect.bottomleft, self.rect.topleft)
         textSurf = pg.font.SysFont(pg.font.get_default_font(), self.textHeight).render(self.text, True, self.textColour)
         textRect = textSurf.get_rect()
         textRect.center = self.rect.center
         surface.blit(textSurf, textRect)
-    def get_click(self):
-        temp = (self.activated and pg.mouse.get_pressed()[0] and self.rect.collidepoint(pg.mouse.get_pos()))
+    def get_click(self, origin = (0,0)):
+        temp = (self.activated and pg.mouse.get_pressed()[0] and self.onButton(origin))
         if self.flag == False and temp:
             self.flag = True
             return temp
@@ -53,12 +61,13 @@ class Button():
 
 '''---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'''
 
-def Quit():
-    pg.quit()
-    quit()
-
-def text(screen, x, y, size, text, colour = clr.white):
+def text(screen, x , y, size, text, colour = clr.white, center = None):
     textSurf = pg.font.SysFont(pg.font.get_default_font(), size).render(text, True, colour)
+    if center:
+        textRect = textSurf.get_rect()
+        textRect.center = center
+        x, y = textRect.topleft
+        
     screen.blit(textSurf, (x, y))
 
 def sun(screen):
