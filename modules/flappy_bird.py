@@ -28,7 +28,7 @@ class Pipe():
                 self.size[1] = randint(1, block-1) * screenHt//block
             else:
                 self.size[1] = screenHt - (pipe_list[i%(len(pipe_list)//2)].size[1] + screenHt//block)
-            self.coord[0] = 1100
+            self.coord[0] = 1400
 
         
         self.surf.fill(clr.sky)
@@ -79,8 +79,8 @@ class Bird():
             screen.blit(self.pic_up, self.pos)
     def is_dead(self, screenHt):
         return self.pos[1] > screenHt
-    def move(self, t, a = 0.05):
-        self.v += a * t/2
+    def move(self, t, a = 2 ):
+        self.v += a
         if self.v > 15:
             self.v = 15
         elif self.v < -25:
@@ -152,21 +152,23 @@ def mainLoop():
     bot_pipe3 = Pipe(1100, (randintlist[2] + screenHt//block), False, (screenHt - (randintlist[2] + screenHt//block)))
     top_pipe4 = Pipe(1400, 0, True, randintlist[3])
     bot_pipe4 = Pipe(1400, (randintlist[3] + screenHt//block), False, (screenHt - (randintlist[3] + screenHt//block)))
+    top_pipe5 = Pipe(1700, 0, True, randintlist[4])
+    bot_pipe5 = Pipe(1700, (randintlist[4] + screenHt//block), False, (screenHt - (randintlist[4] + screenHt//block)))
 
     bird = Bird(50, 200, pic_up, pic_down)
 
-    pipe_list = [top_pipe1, top_pipe2, top_pipe3, top_pipe4,
-                 bot_pipe1, bot_pipe2, bot_pipe3, bot_pipe4]
+    pipe_list = [top_pipe1, top_pipe2, top_pipe3, top_pipe4, top_pipe5,
+                 bot_pipe1, bot_pipe2, bot_pipe3, bot_pipe4, bot_pipe5]
 
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                pg.quit()
+                Quit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
-                    pg.quit()
+                    Quit()
                 if event.key == pg.K_SPACE and alive:
-                    bird.move(count, -0.75)
+                    bird.move(count, -25)
 
         screen.fill(clr.sky)
 
@@ -198,18 +200,18 @@ def mainLoop():
         if count % 25 == 0 and alive:
             score += 1
 
-        text(screen, 1050, 5, 30, str(score), clr.black)
+        text(screen, screenWd - 70, 5, 30, str(score), clr.black)
 
         bird.show(screen)
 
         pg.display.update()
         clock.tick(FPS)
 
-# try:
-#     restart = mainLoop()
-#     while restart:
-#         restart = mainLoop()
-# except:
-#     traceback.print_exc()
-# finally:
-#     pg.quit()
+##try:
+##    restart = mainLoop()
+##    while restart:
+##        restart = mainLoop()
+##except:
+##    traceback.print_exc()
+##finally:
+##    pg.quit()

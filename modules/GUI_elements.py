@@ -60,6 +60,9 @@ class Button():
             self.flag = False
 
 '''---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'''
+def Quit():
+    pg.quit()
+    exit()
 
 def text(screen, x , y, size, text, colour = clr.white, center = None):
     textSurf = pg.font.SysFont(pg.font.get_default_font(), size).render(text, True, colour)
