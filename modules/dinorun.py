@@ -139,7 +139,7 @@ def mainLoop(screenCol, textCol):
                 	pg.display.update() 
                 	paused = True
                 	while paused:
-                		for event in pg.event.get():
+						for event in pg.event.get():
 				            if event.type == pg.QUIT:
 				                paused = False
 				            if event.type == pg.KEYDOWN:
