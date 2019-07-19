@@ -110,7 +110,7 @@ def difficultyChoice(screenCol, textCol):
 def mainLoop(screenCol, textCol, speed, size):
     FPS = 25
     screenWidth, screenHeight = (1120, 630)
-    screen = pg.display.set_mode((screenWidth, screenHeight), pg.FULLSCREEN)
+    screen = pg.display.set_mode((screenWidth, screenHeight))
     clock = pg.time.Clock()
     screenCenter = (screenWidth//2, screenHeight//2)
     

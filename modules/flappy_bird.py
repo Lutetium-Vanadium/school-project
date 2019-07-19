@@ -169,6 +169,18 @@ def mainLoop():
                     Quit()
                 if event.key == pg.K_SPACE and alive:
                     bird.move(count, -25)
+                elif event.key == pg.K_p:
+                    center = (screenWd //2, 100)
+                    text(screen, 0, 0, 50, "Paused", clr.black, center)
+                    pg.display.update() 
+                    paused = True
+                    while paused:
+                        for event in pg.event.get():
+                            if event.type == pg.QUIT:
+                                paused = False
+                            if event.type == pg.KEYDOWN:
+                                if event.key == pg.K_ESCAPE or event.key == pg.K_p or event.key == pg.K_SPACE:
+                                    paused = False
 
         screen.fill(clr.sky)
 

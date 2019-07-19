@@ -1,5 +1,4 @@
 import pygame as pg
-pg.init
 
 white = pg.Color("WHITE")
 black = pg.Color("BLACK")
@@ -14,3 +13,4 @@ sky = pg.Color("SKYBLUE")
 blue = pg.Color("BLUE")
 gray = pg.Color(125, 125, 125)
 light_gray = pg.Color(200, 200, 200)
+light_light_gray = pg.Color(240, 240, 240)
