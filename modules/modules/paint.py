@@ -62,6 +62,7 @@ class Canvas():
         if self.pressed == False:
             active(self.undo)
             for i in range(self.list_pos, len(self.surflist)-1):
+                print(i)
                 self.surflist.pop()
             self.surflist.append(self.surflist[self.list_pos].copy())
             self.list_pos += 1
